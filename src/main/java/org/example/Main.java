@@ -25,9 +25,10 @@ public class Main {
 
             System.out.println("1 : New Entry");
             System.out.println("2 : See Data");
-            System.out.println("3 : Update Data");
+            System.out.println("3 : Edit Data");
             System.out.println("4 : Delete Data");
-            System.out.println("5 : Exit");
+            System.out.println("5 : Update Data");
+            System.out.println("6 : Exit");
 
 
             System.out.println("Choose");
@@ -43,13 +44,17 @@ public class Main {
                     seeData(s, bufferedReader, student);
                     break;
                 case 3:
-                    updateData(s, bufferedReader);
+                    editData(s, bufferedReader);
                     break;
                 case 4:
                     deleteData(s, bufferedReader, student);
                     break;
                 case 5:
+                    updateData(s,bufferedReader,student);
+                    break;
+                case 6:
                     exit();
+                    break;
 
                 default:
                     System.out.println("Wrong input");
@@ -61,10 +66,24 @@ public class Main {
             factory.close();
     }
 
+    private static void updateData(Session s, BufferedReader bufferedReader, Student student) throws IOException {
+        System.out.println("Enter Student_Id");
+        Transaction tx=s.beginTransaction();
+        int id= Integer.parseInt(bufferedReader.readLine());
+        System.out.println("is fee paid");
+        String fee=bufferedReader.readLine();
+        Query q=s.createQuery("update from Student set fee=:f where student_id=:id");
+        q.setParameter("f",fee);
+        q.setParameter("id",id);
+        q.executeUpdate();
+        tx.commit();
+    }
+
 
     private static void exit() {
-        System.out.println("Thank you for visiting");
         x=1;
+        System.out.println("Thank you for visiting");
+
     }
 
     private static void deleteData(Session s, BufferedReader bufferedReader, Student student) throws IOException {
@@ -82,7 +101,7 @@ public class Main {
 
     }
 
-    private static void updateData(Session s, BufferedReader bufferedReader) throws IOException {
+    private static void editData(Session s, BufferedReader bufferedReader) throws IOException {
         System.out.println("Enter Id Of Student whom you want to change data");
         Transaction tx=s.beginTransaction();
         int id= Integer.parseInt(bufferedReader.readLine());

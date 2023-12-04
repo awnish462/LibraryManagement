@@ -5,7 +5,6 @@ import java.util.Date;
 
 
 @Entity
-@Embeddable
 public class Student {
     private String student_name;
     @Id
@@ -14,6 +13,7 @@ public class Student {
 
     private String mobile_number;
     private Date date_time;
+    private String fee;
 
     public Student(String student_name, int student_id, Date date_time) {
         this.student_name = student_name;
@@ -56,5 +56,11 @@ public class Student {
         this.mobile_number = mobile_number;
     }
 
+    public String getFee() {
+        return fee;
+    }
 
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
 }
